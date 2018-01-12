@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GridMove2 : MonoBehaviour {
 
+    private bool isMoving = false;
     private int cellSize = 1;
     public float WalkSpeed = 5.0f;
     public float TurnSpeed = 3.5f;
@@ -18,19 +19,19 @@ public class GridMove2 : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp("w"))
+        if (Input.GetKeyUp("w") && !isMoving)
         {
             StartCoroutine(MoveForward());
         }
-        if (Input.GetKeyUp("s"))
+        if (Input.GetKeyUp("s") && !isMoving)
         {
             StartCoroutine(MoveBackward());
         }
-        if (Input.GetKeyUp("a"))
+        if (Input.GetKeyUp("a") && !isMoving)
         {
             StartCoroutine(RotateLeft());
         }
-        if (Input.GetKeyUp("d"))
+        if (Input.GetKeyUp("d") && !isMoving)
         {
             StartCoroutine(RotateRight());
         }
@@ -61,6 +62,7 @@ public class GridMove2 : MonoBehaviour {
         Vector3 newPos = transform.position + transform.TransformDirection(Vector3.forward * cellSize);
         Collider[] hitColliders = Physics.OverlapSphere(newPos, 0.1f);
         if (hitColliders.Length == 0) {
+            isMoving = true;
             walkingSound.Play();
             for (float t=0f;t < 1f; t+= Time.deltaTime * (WalkSpeed / cellSize))
             {
@@ -68,6 +70,7 @@ public class GridMove2 : MonoBehaviour {
                 yield return new WaitForSeconds(0);
             }
             //transform.Translate(Vector3.forward * cellSize);
+            isMoving = false;
         }
     }
 
@@ -77,17 +80,20 @@ public class GridMove2 : MonoBehaviour {
         Collider[] hitColliders = Physics.OverlapSphere(newPos, 0.1f);
         if (hitColliders.Length == 0)
         {
+            isMoving = true;
             walkingSound.Play();
             for (float t = 0f; t < 1f; t += Time.deltaTime * (WalkSpeed / cellSize))
             {
                 transform.position = Vector3.Lerp(transform.position, newPos, t);
                 yield return new WaitForSeconds(0);
             }
+            isMoving = false;
         }
     }
 
     IEnumerator RotateLeft()
     {
+        isMoving = true;
         var oldRotation = transform.rotation;
         transform.Rotate(0, -90, 0);
         var NewRotation = transform.rotation;
@@ -98,10 +104,12 @@ public class GridMove2 : MonoBehaviour {
             yield return new WaitForSeconds(0);
         }
         transform.rotation = NewRotation;
+        isMoving = false;
     }
 
     IEnumerator RotateRight()
     {
+        isMoving = true;
         var oldRotation = transform.rotation;
         transform.Rotate(0, 90, 0);
         var NewRotation = transform.rotation;
@@ -113,5 +121,6 @@ public class GridMove2 : MonoBehaviour {
         }
         transform.rotation = NewRotation;
         //transform.Rotate(0, 90, 0);
+        isMoving = false;
     }
 }
