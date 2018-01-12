@@ -134,13 +134,18 @@ public class GridMovement : MonoBehaviour
 
         t = 0.0f;
 
-        while (t < 1.0)
+        Collider[] hitColliders = Physics.OverlapSphere(EndPosition, 0.1f);
+        if (hitColliders.Length == 0)
         {
-            t += Time.deltaTime * (WalkSpeed / GridSize);
-            transform.position = Vector3.Lerp(StartPosition, EndPosition, t);
-            yield return new WaitForSeconds(0);
+            print("TEST");
+            while (t < 1.0)
+            {
+                t += Time.deltaTime * (WalkSpeed / GridSize);
+                transform.position = Vector3.Lerp(StartPosition, EndPosition, t);
+                yield return new WaitForSeconds(0);
+            }
         }
-
+        
         IsMoving = false;
     }
 
@@ -305,9 +310,11 @@ public class GridMovement : MonoBehaviour
         IsMoving = false;
     }
 
+    /*
     public void OnCollisionEnter()
     {
         EndPosition = old;
     }
+    */
 
 }
