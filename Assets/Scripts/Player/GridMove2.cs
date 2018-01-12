@@ -124,7 +124,7 @@ public class GridMove2 : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(oldRotation, NewRotation, t);
             yield return new WaitForSeconds(0);
         }
-        transform.rotation = NewRotation;
+        //transform.rotation = NewRotation;
         isMoving = false;
     }
 
@@ -140,7 +140,7 @@ public class GridMove2 : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(oldRotation, NewRotation, t);
             yield return new WaitForSeconds(0);
         }
-        transform.rotation = NewRotation;
+        //transform.rotation = NewRotation;
         //transform.Rotate(0, 90, 0);
         isMoving = false;
     }
