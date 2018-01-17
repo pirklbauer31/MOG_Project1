@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GridMove2 : MonoBehaviour {
 
@@ -16,10 +17,30 @@ public class GridMove2 : MonoBehaviour {
         walkingSound = GetComponent<AudioSource>();
     }
 
+    public void doMovement(string control)
+    {
+        if (control == "forward" && !isMoving)
+        {
+            StartCoroutine(MoveForward());
+        }
+        else if (control == "backward" && !isMoving)
+        {
+            StartCoroutine(MoveBackward());
+        }
+        else if (control == "left" && !isMoving)
+        {
+            StartCoroutine(RotateLeft());
+        }
+        else if (control == "right" && !isMoving)
+        {
+            StartCoroutine(RotateRight());
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp("w") && !isMoving)
+        if (Input.GetKeyUp("w")  && !isMoving)
         {
             StartCoroutine(MoveForward());
         }
@@ -38,9 +59,9 @@ public class GridMove2 : MonoBehaviour {
 
     }
 
-    public void OnGUI()
+    /*public void OnGUI()
     {
-        if (GUI.Button(new Rect(120, 50, 100, 30), "Step Forward"))
+        if (GUI.Button(new Rect(120, 50, 100, 30), "For"))
 
             StartCoroutine(MoveForward()); ;
 
@@ -48,14 +69,14 @@ public class GridMove2 : MonoBehaviour {
 
             StartCoroutine(RotateLeft());
 
-        if (GUI.Button(new Rect(120, 90, 100, 30), "Step Back"))
+        if (GUI.Button(new Rect(120, 90, 100, 30), "Back"))
 
             StartCoroutine(MoveBackward());
 
         if (GUI.Button(new Rect(230, 90, 100, 30), "Turn Right"))
             StartCoroutine(RotateRight());
 
-    }
+    }*/
 
     IEnumerator MoveForward()
     {
@@ -103,7 +124,7 @@ public class GridMove2 : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(oldRotation, NewRotation, t);
             yield return new WaitForSeconds(0);
         }
-        transform.rotation = NewRotation;
+        //transform.rotation = NewRotation;
         isMoving = false;
     }
 
@@ -119,7 +140,7 @@ public class GridMove2 : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(oldRotation, NewRotation, t);
             yield return new WaitForSeconds(0);
         }
-        transform.rotation = NewRotation;
+        //transform.rotation = NewRotation;
         //transform.Rotate(0, 90, 0);
         isMoving = false;
     }
