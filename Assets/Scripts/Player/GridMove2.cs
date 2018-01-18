@@ -45,28 +45,27 @@ public class GridMove2 : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (isMoving)
-            return;
-        else
-        {
-            if (Input.GetKeyUp("w") )
+            if (isMoving)
+                return;
+            else
             {
-                StartCoroutine(MoveForward());
+                if (Input.GetKeyUp("w"))
+                {
+                    StartCoroutine(MoveForward());
+                }
+                if (Input.GetKeyUp("s"))
+                {
+                    StartCoroutine(MoveBackward());
+                }
+                if (Input.GetKeyUp("a"))
+                {
+                    StartCoroutine(RotateLeft());
+                }
+                if (Input.GetKeyUp("d"))
+                {
+                    StartCoroutine(RotateRight());
+                }
             }
-            if (Input.GetKeyUp("s"))
-            {
-                StartCoroutine(MoveBackward());
-            }
-            if (Input.GetKeyUp("a"))
-            {
-                StartCoroutine(RotateLeft());
-            }
-            if (Input.GetKeyUp("d"))
-            {
-                StartCoroutine(RotateRight());
-            }
-        }
-
     }
 
     /*public void OnGUI()
@@ -90,7 +89,7 @@ public class GridMove2 : MonoBehaviour {
 
     IEnumerator MoveForward()
     {
-        isMoving = true;
+            isMoving = true;
         Vector3 newPos = transform.position + transform.TransformDirection(Vector3.forward * cellSize);
         Collider[] hitColliders = Physics.OverlapSphere(newPos, 0.1f);
         if (hitColliders.Length == 0) {
@@ -107,11 +106,11 @@ public class GridMove2 : MonoBehaviour {
 
     IEnumerator MoveBackward()
     {
+        isMoving = true;
         Vector3 newPos = transform.position + transform.TransformDirection(Vector3.forward * -cellSize);
         Collider[] hitColliders = Physics.OverlapSphere(newPos, 0.1f);
         if (hitColliders.Length == 0)
         {
-            isMoving = true;
             walkingSound.Play();
             for (float t = 0f; t < 1f; t += Time.deltaTime * (WalkSpeed / cellSize))
             {
@@ -134,7 +133,7 @@ public class GridMove2 : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(oldRotation, NewRotation, t);
             yield return new WaitForSeconds(0);
         }
-        //transform.rotation = NewRotation;
+        transform.rotation = NewRotation;
         isMoving = false;
     }
 
@@ -150,8 +149,7 @@ public class GridMove2 : MonoBehaviour {
             transform.rotation = Quaternion.Slerp(oldRotation, NewRotation, t);
             yield return new WaitForSeconds(0);
         }
-        //transform.rotation = NewRotation;
-        //transform.Rotate(0, 90, 0);
+        transform.rotation = NewRotation;
         isMoving = false;
     }
 }

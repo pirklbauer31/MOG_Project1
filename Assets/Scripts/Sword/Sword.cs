@@ -10,6 +10,7 @@ public class Sword : MonoBehaviour
     private Vector2 fingerStart;
     private Vector2 fingerEnd;
     Animator anim;
+    private System.Object lockThis = new System.Object();
 
     // Use this for initialization
     void Start()
