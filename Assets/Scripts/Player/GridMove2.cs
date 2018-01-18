@@ -19,42 +19,52 @@ public class GridMove2 : MonoBehaviour {
 
     public void doMovement(string control)
     {
-        if (control == "forward" && !isMoving)
+        if (isMoving)
+            return;
+        else
         {
-            StartCoroutine(MoveForward());
-        }
-        else if (control == "backward" && !isMoving)
-        {
-            StartCoroutine(MoveBackward());
-        }
-        else if (control == "left" && !isMoving)
-        {
-            StartCoroutine(RotateLeft());
-        }
-        else if (control == "right" && !isMoving)
-        {
-            StartCoroutine(RotateRight());
+            if (control == "forward")
+            {
+                StartCoroutine(MoveForward());
+            }
+            else if (control == "backward")
+            {
+                StartCoroutine(MoveBackward());
+            }
+            else if (control == "left")
+            {
+                StartCoroutine(RotateLeft());
+            }
+            else if (control == "right")
+            {
+                StartCoroutine(RotateRight());
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyUp("w")  && !isMoving)
+        if (isMoving)
+            return;
+        else
         {
-            StartCoroutine(MoveForward());
-        }
-        if (Input.GetKeyUp("s") && !isMoving)
-        {
-            StartCoroutine(MoveBackward());
-        }
-        if (Input.GetKeyUp("a") && !isMoving)
-        {
-            StartCoroutine(RotateLeft());
-        }
-        if (Input.GetKeyUp("d") && !isMoving)
-        {
-            StartCoroutine(RotateRight());
+            if (Input.GetKeyUp("w") )
+            {
+                StartCoroutine(MoveForward());
+            }
+            if (Input.GetKeyUp("s"))
+            {
+                StartCoroutine(MoveBackward());
+            }
+            if (Input.GetKeyUp("a"))
+            {
+                StartCoroutine(RotateLeft());
+            }
+            if (Input.GetKeyUp("d"))
+            {
+                StartCoroutine(RotateRight());
+            }
         }
 
     }
@@ -80,10 +90,10 @@ public class GridMove2 : MonoBehaviour {
 
     IEnumerator MoveForward()
     {
+        isMoving = true;
         Vector3 newPos = transform.position + transform.TransformDirection(Vector3.forward * cellSize);
         Collider[] hitColliders = Physics.OverlapSphere(newPos, 0.1f);
         if (hitColliders.Length == 0) {
-            isMoving = true;
             walkingSound.Play();
             for (float t=0f;t < 1f; t+= Time.deltaTime * (WalkSpeed / cellSize))
             {
