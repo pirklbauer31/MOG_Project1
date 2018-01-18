@@ -101,8 +101,8 @@ public class GridMove2 : MonoBehaviour {
                 yield return new WaitForSeconds(0);
             }
             //transform.Translate(Vector3.forward * cellSize);
-            isMoving = false;
         }
+        isMoving = false;
     }
 
     IEnumerator MoveBackward()
@@ -118,8 +118,8 @@ public class GridMove2 : MonoBehaviour {
                 transform.position = Vector3.Lerp(transform.position, newPos, t);
                 yield return new WaitForSeconds(0);
             }
-            isMoving = false;
         }
+        isMoving = false;
     }
 
     IEnumerator RotateLeft()
