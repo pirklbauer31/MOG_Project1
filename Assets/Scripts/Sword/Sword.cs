@@ -25,7 +25,7 @@ public class Sword : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             print("Left click!");
-            anim.SetTrigger("Attack");
+            anim.SetTrigger("TopDownAttack");
 
         }
         foreach (Touch touch in Input.touches)
